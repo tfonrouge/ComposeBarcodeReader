@@ -4,16 +4,16 @@ import android.annotation.SuppressLint
 import android.util.Log
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageProxy
-import com.google.mlkit.vision.barcode.Barcode
 import com.google.mlkit.vision.barcode.BarcodeScannerOptions
 import com.google.mlkit.vision.barcode.BarcodeScanning
+import com.google.mlkit.vision.barcode.common.Barcode
 import com.google.mlkit.vision.common.InputImage
 import java.util.concurrent.TimeUnit
 
 @SuppressLint("UnsafeOptInUsageError")
 class BarCodeAnalyser(
     private val onBarcodeDetected: (barcodes: List<Barcode>) -> Unit,
-): ImageAnalysis.Analyzer {
+) : ImageAnalysis.Analyzer {
     private var lastAnalyzedTimeStamp = 0L
 
     override fun analyze(image: ImageProxy) {
@@ -24,7 +24,8 @@ class BarCodeAnalyser(
                     .setBarcodeFormats(Barcode.FORMAT_ALL_FORMATS)
                     .build()
                 val barcodeScanner = BarcodeScanning.getClient(options)
-                val imageToProcess = InputImage.fromMediaImage(imageToAnalyze, image.imageInfo.rotationDegrees)
+                val imageToProcess =
+                    InputImage.fromMediaImage(imageToAnalyze, image.imageInfo.rotationDegrees)
 
                 barcodeScanner.process(imageToProcess)
                     .addOnSuccessListener { barcodes ->
