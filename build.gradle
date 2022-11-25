@@ -1,5 +1,6 @@
 buildscript {
     ext {
+        // https://developer.android.com/jetpack/androidx/releases/compose-kotlin
         compose_ui_version = '1.4.0-alpha02'
     }
 }// Top-level build file where you can add configuration options common to all sub-projects/modules.
